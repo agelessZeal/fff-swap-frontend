@@ -119,11 +119,11 @@ const SlippageTabs = () => {
             scale="sm"
             onClick={() => {
               setSlippageInput('')
-              setUserSlippageTolerance(100)
+              setUserSlippageTolerance(500)
             }}
-            variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
+            variant={userSlippageTolerance === 500 ? 'primary' : 'tertiary'}
           >
-            1.0%
+            5.0%
           </Button>
           <Flex alignItems="center">
             <Box width="76px" mt="4px">
@@ -142,7 +142,7 @@ const SlippageTabs = () => {
                   }
                 }}
                 isWarning={!slippageInputIsValid}
-                isSuccess={![10, 50, 100].includes(userSlippageTolerance)}
+                isSuccess={![10, 50, 500].includes(userSlippageTolerance)}
               />
             </Box>
             <Text color="primary" bold ml="2px">
