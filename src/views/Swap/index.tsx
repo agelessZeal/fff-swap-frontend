@@ -33,7 +33,7 @@ import ProgressSteps from './components/ProgressSteps'
 import { AppBody } from '../../components/App'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
 
-import { INITIAL_ALLOWED_SLIPPAGE } from '../../config/constants'
+import { FFF_ADDRESS, INITIAL_ALLOWED_SLIPPAGE } from '../../config/constants'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { useCurrency, useAllTokens } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
@@ -335,32 +335,48 @@ export default function Swap({ history }: RouteComponentProps) {
     'confirmSwapModal',
   )
 
+  let fffToken = false;
+
+  const fftChartInputId =  '0x166daee763902da67984e38baa478a63f55cc25b'
+
+  const fftChartOutputId = '0x55d398326f99059fF775485246999027B3197955'
+
+  const fffoutputCurrency = useCurrency(fftChartOutputId)
+
+  const fffinputCurrency = useCurrency(fftChartInputId)
+
+  if(outputCurrencyId.toLowerCase() === FFF_ADDRESS || inputCurrencyId.toLowerCase() === FFF_ADDRESS){
+    fffToken = true;
+  }
+
+  console.log('currencies:',currencies,fffoutputCurrency)
+
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
       <Flex width="100%" justifyContent="center" position="relative">
         {!isMobile && (
           <PriceChartContainer
-            inputCurrencyId={inputCurrencyId}
-            inputCurrency={currencies[Field.INPUT]}
-            outputCurrencyId={outputCurrencyId}
-            outputCurrency={currencies[Field.OUTPUT]}
+            inputCurrencyId={fffToken? fftChartInputId :inputCurrencyId}
+            inputCurrency={fffToken ? fffinputCurrency : currencies[Field.INPUT]}
+            outputCurrencyId={ fffToken? fftChartOutputId: outputCurrencyId}
+            outputCurrency={fffToken? fffoutputCurrency: currencies[Field.OUTPUT]}
             isChartExpanded={isChartExpanded}
             setIsChartExpanded={setIsChartExpanded}
             isChartDisplayed={isChartDisplayed}
-            currentSwapPrice={singleTokenPrice}
+            currentSwapPrice={fffToken? null : singleTokenPrice}
           />
         )}
         <BottomDrawer
           content={
             <PriceChartContainer
-              inputCurrencyId={inputCurrencyId}
-              inputCurrency={currencies[Field.INPUT]}
-              outputCurrencyId={outputCurrencyId}
-              outputCurrency={currencies[Field.OUTPUT]}
+              inputCurrencyId={fffToken? fftChartInputId :inputCurrencyId}
+              inputCurrency={fffToken ? fffinputCurrency : currencies[Field.INPUT]}
+              outputCurrencyId={ fffToken? fftChartOutputId: outputCurrencyId}
+              outputCurrency={fffToken? fffoutputCurrency: currencies[Field.OUTPUT]}
               isChartExpanded={isChartExpanded}
               setIsChartExpanded={setIsChartExpanded}
               isChartDisplayed={isChartDisplayed}
-              currentSwapPrice={singleTokenPrice}
+              currentSwapPrice={fffToken? null : singleTokenPrice}
               isMobile
             />
           }
@@ -575,11 +591,11 @@ export default function Swap({ history }: RouteComponentProps) {
               )}
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
-          {isChartExpanded && (
+          {/* {isChartExpanded && (
             <Box display={['none', null, null, 'block']} width="100%" height="100%">
               <Footer variant="side" />
             </Box>
-          )}
+          )} */}
         </Flex>
       </Flex>
     </Page>
