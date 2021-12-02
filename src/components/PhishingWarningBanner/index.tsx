@@ -29,10 +29,12 @@ const SpeechBubble = styled.div`
   border-radius: 16px;
   padding: 8px;
   width: 60%;
+  padding-left:20px;
   height: 80%;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
 
   & ${Text} {
     flex-shrink: 0;
@@ -44,25 +46,25 @@ const PhishingWarningBanner: React.FC = () => {
   const { t } = useTranslation()
   const [, hideBanner] = usePhishingBannerManager()
   const { isMobile, isMd } = useMatchBreakpoints()
-  const warningText = t("please make sure you're visiting https://pancakeswap.finance - check the URL carefully.")
-  const warningTextAsParts = warningText.split(/(https:\/\/pancakeswap.finance)/g)
+  const warningText = t("FLIFER swap - connect your wallet and trade.")
+  const warningTextAsParts = warningText.split(/(https:\/\/swap.flifer.com)/g)
   const warningTextComponent = (
     <>
       <Text as="span" color="warning" small bold textTransform="uppercase">
-        {t('Phishing warning: ')}
+        {t('FLIFER swap - connect your wallet and trade. ')}
       </Text>
-      {warningTextAsParts.map((text, i) => (
+      {/* {warningTextAsParts.map((text, i) => (
         <Text
           // eslint-disable-next-line react/no-array-index-key
           key={i}
           small
           as="span"
-          bold={text === 'https://pancakeswap.finance'}
-          color={text === 'https://pancakeswap.finance' ? '#FFFFFF' : '#BDC2C4'}
+          bold={text === 'https://swap.flifer.com'}
+          color={text === 'https://swap.flifer.com' ? '#FFFFFF' : '#BDC2C4'}
         >
           {text}
         </Text>
-      ))}
+      ))} */}
     </>
   )
   return (
@@ -77,11 +79,11 @@ const PhishingWarningBanner: React.FC = () => {
       ) : (
         <>
           <InnerContainer>
-            <picture>
+            {/* <picture>
               <source type="image/webp" srcSet="/images/decorations/phishing-warning-bunny.webp" />
               <source type="image/png" srcSet="/images/decorations/phishing-warning-bunny.png" />
               <img src="/images/decorations/phishing-warning-bunny.png" alt="phishing-warning" width="92px" />
-            </picture>
+            </picture> */}
             <SpeechBubble>{warningTextComponent}</SpeechBubble>
           </InnerContainer>
           <IconButton onClick={hideBanner} variant="text">
