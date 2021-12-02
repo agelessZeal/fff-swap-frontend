@@ -1,4 +1,6 @@
 import { Currency } from '@pancakeswap/sdk'
+import { FFF_ADDRESS } from 'config/constants'
+import { useCurrency } from 'hooks/Tokens'
 import useTheme from 'hooks/useTheme'
 import React, { useCallback, useState } from 'react'
 import { useFetchPairPrices } from 'state/swap/hooks'
@@ -34,9 +36,29 @@ const PriceChartContainer: React.FC<PriceChartContainerProps> = ({
   currentSwapPrice,
   isMobile,
 }) => {
+
+
   const [timeWindow, setTimeWindow] = useState<PairDataTimeWindowEnum>(0)
-  const token0Address = getTokenAddress(inputCurrencyId)
-  const token1Address = getTokenAddress(outputCurrencyId)
+
+  const fftChartInputId = inputCurrencyId// '0x166daee763902da67984e38baa478a63f55cc25b'
+
+  const fftChartOutputId = outputCurrencyId//  '0x55d398326f99059fF775485246999027B3197955'
+
+  const fffoutputCurrency = outputCurrency;// useCurrency(fftChartOutputId)
+
+  const fffinputCurrency = inputCurrency;// useCurrency(fftChartInputId)
+
+  const token0Address = getTokenAddress(fftChartInputId)
+  const token1Address = getTokenAddress(fftChartOutputId)
+
+  // if(outputCurrencyId.toLowerCase() !== FFF_ADDRESS && inputCurrencyId.toLowerCase() !== FFF_ADDRESS){
+  //    fffoutputCurrency = outputCurrency
+  //    fffinputCurrency = inputCurrency
+  //    token0Address = getTokenAddress(inputCurrencyId)
+  //    token1Address = getTokenAddress(outputCurrencyId)
+  // }
+
+
   const [isPairReversed, setIsPairReversed] = useState(false)
   const togglePairReversed = useCallback(() => setIsPairReversed((prePairReversed) => !prePairReversed), [])
 
@@ -46,6 +68,9 @@ const PriceChartContainer: React.FC<PriceChartContainerProps> = ({
     timeWindow,
     currentSwapPrice,
   })
+
+  console.log('swapPairPrice:', pairPrices)
+
   const { isDark } = useTheme()
 
   if (!isChartDisplayed) {
@@ -86,8 +111,8 @@ const PriceChartContainer: React.FC<PriceChartContainerProps> = ({
       lineChartData={pairPrices}
       timeWindow={timeWindow}
       setTimeWindow={setTimeWindow}
-      inputCurrency={isPairReversed ? outputCurrency : inputCurrency}
-      outputCurrency={isPairReversed ? inputCurrency : outputCurrency}
+      inputCurrency={isPairReversed ? fffoutputCurrency : fffinputCurrency}
+      outputCurrency={isPairReversed ? fffinputCurrency : fffoutputCurrency}
       onSwitchTokens={togglePairReversed}
       isDark={isDark}
       isChartExpanded={isChartExpanded}

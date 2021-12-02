@@ -106,6 +106,8 @@ export default function Swap({ history }: RouteComponentProps) {
   // get custom setting values for user
   const [allowedSlippage] = useUserSlippageTolerance()
 
+  console.log('allowedSlippage:',allowedSlippage)
+
   // swap state
   const { independentField, typedValue, recipient } = useSwapState()
   const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo()
