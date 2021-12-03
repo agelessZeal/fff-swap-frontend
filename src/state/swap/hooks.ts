@@ -134,6 +134,8 @@ export function useSingleTokenSwapInfo(): { [key: string]: number } {
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
   } = useSwapState()
 
+  console.log('useSingleTokenSwapInfo:',inputCurrencyId,outputCurrencyId)
+
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
   const token0Address = getTokenAddress(inputCurrencyId)

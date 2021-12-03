@@ -71,7 +71,12 @@ const PhishingWarningBanner: React.FC = () => {
     <Container>
       {isMobile || isMd ? (
         <>
-          <Box>{warningTextComponent}</Box>
+                    <picture>
+              {/* <source type="image/webp" srcSet="/images/decorations/phishing-warning-bunny.webp" /> */}
+              <source type="image/png" srcSet="/logo.png" />
+              <img src="/logo.png" alt="phishing-warning" width="55px" />
+            </picture>
+          <Box style={{marginLeft:8}}>{warningTextComponent}</Box>
           {/* <IconButton onClick={hideBanner} variant="text">
             <CloseIcon color="#FFFFFF" />
           </IconButton> */}

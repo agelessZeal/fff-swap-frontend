@@ -354,19 +354,38 @@ export default function Swap({ history }: RouteComponentProps) {
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
 
-        <Box width="50%" color="textSubtle" style={{ userSelect: 'none', maxWidth:450,color:'#222d7e', fontSize:25, marginLeft:60,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
-          <div style={{display:'flex',}}>
-            <span style={{width:'60%'}}>Price(FFF/USD)</span><span> $0.018</span>
-          </div>
+      {isMobile ?(
+          <Box width="90%" color="textSubtle" style={{ userSelect: 'none',minWidth:300, maxWidth:450,color:'#fff', fontSize:20, marginLeft:10,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
+            <div style={{display:'flex',}}>
+              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> $0.018</span>
+            </div>
 
-          <div style={{display:'flex',}}>
-            <span style={{width:'60%'}}>Price(BNB/FFF)</span><span> 31,604.30</span>
-          </div>
+            <div style={{display:'flex',}}>
+              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> 31,604.30</span>
+            </div>
 
-          <div style={{display:'flex'}}>
-            <span style={{width:'60%'}}>Market capitalization:</span><span> $42 million</span>
-          </div>
-        </Box>
+            <div style={{display:'flex'}}>
+              <span style={{width:'60%'}}>Market capitalization:</span><span> $42 million</span>
+            </div>
+          </Box>
+        ):(
+          <Box width="50%" color="textSubtle" style={{ userSelect: 'none',minWidth:300, maxWidth:450,color:'#fff', fontSize:25, marginLeft:60,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
+            <div style={{display:'flex',}}>
+              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> $0.018</span>
+            </div>
+
+            <div style={{display:'flex',}}>
+              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> 31,604.30</span>
+            </div>
+
+            <div style={{display:'flex'}}>
+              <span style={{width:'60%'}}>Market capitalization:</span><span> $42 million</span>
+            </div>
+          </Box>
+        )
+      }
+
+
 
       <Flex width="100%" justifyContent="center" position="relative">
 
