@@ -9,11 +9,11 @@ const Container = styled(Flex)`
   height: 100%;
   padding: 12px;
   align-items: center;
-  background: linear-gradient(0deg, rgba(39, 38, 44, 0.4), rgba(39, 38, 44, 0.4)),
-    linear-gradient(180deg, #8051d6 0%, #492286 100%);
+  background: linear-gradient(0deg, rgba(6, 17, 97, 0.4), rgba(39, 38, 44, 0.4)),
+    linear-gradient(180deg, #061161 0%, #061161 100%);
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 0px;
-    background: linear-gradient(180deg, #8051d6 0%, #492286 100%);
+    background: linear-gradient(180deg, #061161 0%, #061161 100%);
   }
 `
 
@@ -25,8 +25,9 @@ const InnerContainer = styled(Flex)`
 `
 
 const SpeechBubble = styled.div`
-  background: rgba(39, 38, 44, 0.4);
-  border-radius: 16px;
+  // background: rgba(39, 38, 44, 0.4);
+  // border-radius: 16px;
+  color="#FFFFFF"
   padding: 8px;
   width: 60%;
   padding-left:20px;
@@ -34,7 +35,6 @@ const SpeechBubble = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  justify-content: center;
 
   & ${Text} {
     flex-shrink: 0;
@@ -50,8 +50,8 @@ const PhishingWarningBanner: React.FC = () => {
   const warningTextAsParts = warningText.split(/(https:\/\/swap.flifer.com)/g)
   const warningTextComponent = (
     <>
-      <Text as="span" color="warning" small bold textTransform="uppercase">
-        {t('FLIFER swap - connect your wallet and trade. ')}
+      <Text as="span" color="white" fontSize="25px" bold>
+        {t('Flifer Technologies')}
       </Text>
       {/* {warningTextAsParts.map((text, i) => (
         <Text
@@ -72,23 +72,23 @@ const PhishingWarningBanner: React.FC = () => {
       {isMobile || isMd ? (
         <>
           <Box>{warningTextComponent}</Box>
-          <IconButton onClick={hideBanner} variant="text">
+          {/* <IconButton onClick={hideBanner} variant="text">
             <CloseIcon color="#FFFFFF" />
-          </IconButton>
+          </IconButton> */}
         </>
       ) : (
         <>
           <InnerContainer>
-            {/* <picture>
-              <source type="image/webp" srcSet="/images/decorations/phishing-warning-bunny.webp" />
-              <source type="image/png" srcSet="/images/decorations/phishing-warning-bunny.png" />
-              <img src="/images/decorations/phishing-warning-bunny.png" alt="phishing-warning" width="92px" />
-            </picture> */}
+            <picture>
+              {/* <source type="image/webp" srcSet="/images/decorations/phishing-warning-bunny.webp" /> */}
+              <source type="image/png" srcSet="/logo.png" />
+              <img src="/logo.png" alt="phishing-warning" width="55px" />
+            </picture>
             <SpeechBubble>{warningTextComponent}</SpeechBubble>
           </InnerContainer>
-          <IconButton onClick={hideBanner} variant="text">
+          {/* <IconButton onClick={hideBanner} variant="text">
             <CloseIcon color="#FFFFFF" />
-          </IconButton>
+          </IconButton> */}
         </>
       )}
     </Container>

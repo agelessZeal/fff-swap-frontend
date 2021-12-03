@@ -351,11 +351,26 @@ export default function Swap({ history }: RouteComponentProps) {
     fffToken = true;
   }
 
-  console.log('currencies:',currencies,fffoutputCurrency)
-
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
+
+        <Box width="50%" color="textSubtle" style={{ userSelect: 'none', maxWidth:450,color:'#222d7e', fontSize:25, marginLeft:60,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
+          <div style={{display:'flex',}}>
+            <span style={{width:'60%'}}>Price(FFF/USD)</span><span> $0.018</span>
+          </div>
+
+          <div style={{display:'flex',}}>
+            <span style={{width:'60%'}}>Price(BNB/FFF)</span><span> 31,604.30</span>
+          </div>
+
+          <div style={{display:'flex'}}>
+            <span style={{width:'60%'}}>Market capitalization:</span><span> $42 million</span>
+          </div>
+        </Box>
+
       <Flex width="100%" justifyContent="center" position="relative">
+
+
         {!isMobile && (
           <PriceChartContainer
             inputCurrencyId={fffToken? fftChartInputId :inputCurrencyId}
@@ -467,14 +482,21 @@ export default function Swap({ history }: RouteComponentProps) {
                             />
                           </RowBetween>
                         )}
-                        {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
+                        {/* {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
                           <RowBetween align="center">
                             <Label>{t('Slippage Tolerance')}</Label>
                             <Text bold color="primary">
                               {allowedSlippage / 100}%
                             </Text>
                           </RowBetween>
-                        )}
+                        )} */}
+
+                          <RowBetween align="center">
+                            <Label>{t('Slippage Tolerance')}</Label>
+                            <Text bold color="primary">
+                              {allowedSlippage / 100}%
+                            </Text>
+                          </RowBetween>
                       </AutoColumn>
                     )}
                   </AutoColumn>
