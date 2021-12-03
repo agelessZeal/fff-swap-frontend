@@ -18,6 +18,7 @@ import Footer from 'components/Menu/Footer'
 import { RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
+import { formatAmount, formatAmountNotation } from 'views/Info/utils/formatInfoNumbers'
 import AddressInputPanel from './components/AddressInputPanel'
 import { GreyCard } from '../../components/Card'
 import Column, { AutoColumn } from '../../components/Layout/Column'
@@ -46,6 +47,7 @@ import {
   useSwapActionHandlers,
   useSwapState,
   useSingleTokenSwapInfo,
+  useSingleSwapInfoPrice,
 } from '../../state/swap/hooks'
 import {
   useExpertModeManager,
@@ -67,6 +69,13 @@ const Label = styled(Text)`
   font-weight: bold;
   color: ${({ theme }) => theme.colors.secondary};
 `
+
+const formatOptions = {
+  notation: 'standard' as formatAmountNotation,
+  displayThreshold: 0.001,
+  tokenPrecision: true,
+}
+
 
 export default function Swap({ history }: RouteComponentProps) {
   const loadedUrlParams = useDefaultsFromURLSearch()
@@ -105,8 +114,6 @@ export default function Swap({ history }: RouteComponentProps) {
 
   // get custom setting values for user
   const [allowedSlippage] = useUserSlippageTolerance()
-
-  console.log('allowedSlippage:',allowedSlippage)
 
   // swap state
   const { independentField, typedValue, recipient } = useSwapState()
@@ -351,17 +358,26 @@ export default function Swap({ history }: RouteComponentProps) {
     fffToken = true;
   }
 
+  const bnbPairPrice = useSingleSwapInfoPrice('BNB','0x166daee763902da67984e38baa478a63f55cc25b')
+
+  const usdtPairPrice = useSingleSwapInfoPrice('0x55d398326f99059fF775485246999027B3197955','0x166daee763902da67984e38baa478a63f55cc25b')
+
+  const usdtPrice = usdtPairPrice? formatAmount(usdtPairPrice['0x166daee763902da67984e38baa478a63f55cc25b'], formatOptions)  : 0
+
+  const bnbPrice = bnbPairPrice? bnbPairPrice['0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'] : 0
+
+
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
 
       {isMobile ?(
           <Box width="90%" color="textSubtle" style={{ userSelect: 'none',minWidth:300, maxWidth:450,color:'#fff', fontSize:20, marginLeft:10,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> $0.018</span>
+              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> {`$${usdtPrice}`}</span>
             </div>
 
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> 31,604.30</span>
+              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> {`${bnbPrice}`}</span>
             </div>
 
             <div style={{display:'flex'}}>
@@ -371,11 +387,11 @@ export default function Swap({ history }: RouteComponentProps) {
         ):(
           <Box width="50%" color="textSubtle" style={{ userSelect: 'none',minWidth:300, maxWidth:450,color:'#fff', fontSize:25, marginLeft:60,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> $0.018</span>
+              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> {`$${usdtPrice}`}</span>
             </div>
 
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> 31,604.30</span>
+              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> {`${bnbPrice}`}</span>
             </div>
 
             <div style={{display:'flex'}}>
