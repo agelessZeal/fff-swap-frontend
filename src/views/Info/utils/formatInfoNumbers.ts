@@ -17,6 +17,7 @@ export type formatAmountNotation = 'compact' | 'standard'
  * @param displayThreshold - threshold below which it will return simply <displayThreshold instead of actual value, e.g. if 0.001 -> returns <0.001 for 0.0005
  * @param tokenPrecision - set to true when you want precision to be 3 decimals for values < 1 and 2 decimals for values > 1
  * @param isInteger - if true the values will contain decimal part only if the amount is > 1000
+ * @param showDecimal - if true the values will contain decimal part only if the amount is > 1000
  * @returns formatted string ready to be displayed
  */
 export const formatAmount = (
@@ -25,10 +26,11 @@ export const formatAmount = (
     notation?: formatAmountNotation
     displayThreshold?: number
     tokenPrecision?: boolean
-    isInteger?: boolean
+    isInteger?: boolean,
+    showDecimal?:boolean
   },
 ) => {
-  const { notation = 'compact', displayThreshold, tokenPrecision, isInteger } = options || { notation: 'compact' }
+  const { notation = 'compact', displayThreshold, tokenPrecision, isInteger,showDecimal } = options || { notation: 'compact' }
   if (amount === 0) {
     if (isInteger) {
       return '0'
@@ -46,6 +48,10 @@ export const formatAmount = (
   let precision = 2
   if (tokenPrecision) {
     precision = amount < 1 ? 3 : 2
+  }
+
+  if(showDecimal){
+    precision =  0;
   }
 
   let format = `0.${'0'.repeat(precision)}a`

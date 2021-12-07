@@ -69,8 +69,6 @@ const PriceChartContainer: React.FC<PriceChartContainerProps> = ({
     currentSwapPrice,
   })
 
-  console.log('swapPairPrice:', pairPrices)
-
   const { isDark } = useTheme()
 
   if (!isChartDisplayed) {

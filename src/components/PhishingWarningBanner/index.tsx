@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Box, CloseIcon, IconButton, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Text, Flex, Box, CloseIcon, IconButton, useMatchBreakpoints, Link, LinkExternal } from '@pancakeswap/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { usePhishingBannerManager } from 'state/user/hooks'
 
@@ -70,7 +70,7 @@ const PhishingWarningBanner: React.FC = () => {
   return (
     <Container>
       {isMobile || isMd ? (
-        <>
+        <Link external href="https://flifer.com/">
                     <picture>
               {/* <source type="image/webp" srcSet="/images/decorations/phishing-warning-bunny.webp" /> */}
               <source type="image/png" srcSet="/logo.png" />
@@ -80,9 +80,9 @@ const PhishingWarningBanner: React.FC = () => {
           {/* <IconButton onClick={hideBanner} variant="text">
             <CloseIcon color="#FFFFFF" />
           </IconButton> */}
-        </>
+        </Link>
       ) : (
-        <>
+        <Link external href="https://flifer.com/">
           <InnerContainer>
             <picture>
               {/* <source type="image/webp" srcSet="/images/decorations/phishing-warning-bunny.webp" /> */}
@@ -94,7 +94,7 @@ const PhishingWarningBanner: React.FC = () => {
           {/* <IconButton onClick={hideBanner} variant="text">
             <CloseIcon color="#FFFFFF" />
           </IconButton> */}
-        </>
+        </Link>
       )}
     </Container>
   )
