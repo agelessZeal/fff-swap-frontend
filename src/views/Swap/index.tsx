@@ -19,6 +19,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
 import { formatAmount, formatAmountNotation } from 'views/Info/utils/formatInfoNumbers'
+import { PairDataTimeWindowEnum } from 'state/swap/types'
 import AddressInputPanel from './components/AddressInputPanel'
 import { GreyCard } from '../../components/Card'
 import Column, { AutoColumn } from '../../components/Layout/Column'
@@ -48,6 +49,7 @@ import {
   useSwapState,
   useSingleTokenSwapInfo,
   useSingleSwapInfoPrice,
+  useFetchPairPrices,
 } from '../../state/swap/hooks'
 import {
   useExpertModeManager,
@@ -63,6 +65,7 @@ import SwapWarningModal from './components/SwapWarningModal'
 import PriceChartContainer from './components/Chart/PriceChartContainer'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
 import CurrencyInputHeader from './components/CurrencyInputHeader'
+import { getTokenAddress } from './components/Chart/utils'
 
 const Label = styled(Text)`
   font-size: 12px;
@@ -75,6 +78,15 @@ const formatOptions = {
   displayThreshold: 0.001,
   tokenPrecision: true,
 }
+
+const formatOptions2 = {
+  notation: 'standard' as formatAmountNotation,
+  displayThreshold: 1,
+  tokenPrecision: false,
+  isInteger:true,
+  showDecimal:true
+}
+
 
 
 export default function Swap({ history }: RouteComponentProps) {
@@ -358,55 +370,66 @@ export default function Swap({ history }: RouteComponentProps) {
     fffToken = true;
   }
 
-  const bnbPairPrice = useSingleSwapInfoPrice('BNB','0x166daee763902da67984e38baa478a63f55cc25b')
+  // const [timeWindow, setTimeWindow] = useState<PairDataTimeWindowEnum>(0)
 
-  const usdtPairPrice = useSingleSwapInfoPrice('0x55d398326f99059fF775485246999027B3197955','0x166daee763902da67984e38baa478a63f55cc25b')
+  // const currentSwapPrice = null
 
-  const usdtPrice = usdtPairPrice? formatAmount(usdtPairPrice['0x166daee763902da67984e38baa478a63f55cc25b'], formatOptions)  : 0
+  // const { pairPrices : bnbPairPrice, pairId } = useFetchPairPrices({
+  //   token0Address:getTokenAddress('BNB'),
+  //   token1Address: getTokenAddress('0x166daee763902da67984e38baa478a63f55cc25b'),
+  //   timeWindow,
+  //   currentSwapPrice,
+  // })
 
-  const bnbPrice = bnbPairPrice? bnbPairPrice['0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'] : 0
 
+  // const { pairPrices : usdtPairPrice, pairId : pairUSDTId  } = useFetchPairPrices({
+  //   token0Address:getTokenAddress('0x166daee763902da67984e38baa478a63f55cc25b'),
+  //   token1Address: getTokenAddress('0x55d398326f99059fF775485246999027B3197955'),
+  //   timeWindow,
+  //   currentSwapPrice,
+  // })
+
+  // const valueToDisplay = bnbPairPrice ? bnbPairPrice[bnbPairPrice.length - 1]?.value : 0;
+
+  // const valueToDisplayUSDT = usdtPairPrice ? usdtPairPrice[usdtPairPrice.length - 1]?.value : 0;
+
+  // const usdtPrice = usdtPairPrice? `$${formatAmount(valueToDisplayUSDT, formatOptions)}`  : 'Loading...'
+
+  // const bnbPrice = bnbPairPrice? `${formatAmount(Math.round(valueToDisplay), formatOptions2)}` : 'Loading...'
 
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
 
-      {isMobile ?(
+      {/* {isMobile ?(
           <Box width="90%" color="textSubtle" style={{ userSelect: 'none',minWidth:300, maxWidth:450,color:'#fff', fontSize:20, marginLeft:10,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> {`$${usdtPrice}`}</span>
+              <span style={{width:'60%'}}>Price (USD/FFF):</span><span> {`${usdtPrice}`}</span>
             </div>
 
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> {`${bnbPrice}`}</span>
-            </div>
-
-            <div style={{display:'flex'}}>
-              <span style={{width:'60%'}}>Market capitalization:</span><span> $42 million</span>
+              <span style={{width:'60%'}}>Price (FFF/BNB):</span><span> {`${bnbPrice}`}</span>
             </div>
           </Box>
         ):(
           <Box width="50%" color="textSubtle" style={{ userSelect: 'none',minWidth:300, maxWidth:450,color:'#fff', fontSize:25, marginLeft:60,marginBottom:10 ,justifyContent:'center', alignItems:'center'}}>
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(USD/FFF)</span><span> {`$${usdtPrice}`}</span>
+              <span style={{width:'60%'}}>Price (USD/FFF):</span><span> {`${usdtPrice}`}</span>
             </div>
 
             <div style={{display:'flex',}}>
-              <span style={{width:'60%'}}>Price(FFF/BNB)</span><span> {`${bnbPrice}`}</span>
+              <span style={{width:'60%'}}>Price (FFF/BNB):</span><span> {`${bnbPrice}`}</span>
             </div>
 
-            <div style={{display:'flex'}}>
-              <span style={{width:'60%'}}>Market capitalization:</span><span> $42 million</span>
-            </div>
           </Box>
         )
-      }
+      } */}
 
 
 
       <Flex width="100%" justifyContent="center" position="relative">
 
 
-        {!isMobile && (
+        {/* {!isMobile && (
           <PriceChartContainer
             inputCurrencyId={fffToken? fftChartInputId :inputCurrencyId}
             inputCurrency={fffToken ? fffinputCurrency : currencies[Field.INPUT]}
@@ -434,7 +457,7 @@ export default function Swap({ history }: RouteComponentProps) {
           }
           isOpen={isChartDisplayed}
           setIsOpen={setIsChartDisplayed}
-        />
+        /> */}
         <Flex flexDirection="column">
           <StyledSwapContainer $isChartExpanded={isChartExpanded}>
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'} mr={isChartExpanded ? '0' : '0'}>
